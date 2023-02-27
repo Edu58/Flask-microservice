@@ -1,0 +1,29 @@
+FROM python:3.8-alpine
+
+# install environment dependencies
+# RUN apt-get update -yqq \
+#     && apt-get install -yqq --no-install-recommends \
+#         netcat \
+#     && apt-get -q clean
+    
+# set working directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# add requirements.txt
+COPY ./requirements.txt /usr/src/app/requirements.txt
+
+
+# install packages
+RUN pip install -r requirements.txt
+
+# add app
+COPY . /usr/src/app
+
+# add entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+
+# run server
+CMD python manage.py run -h 0.0.0.0
+
+# CMD ["bash", "./entrypoint.sh"]
