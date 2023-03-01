@@ -1,18 +1,19 @@
 import unittest
 from flask.cli import FlaskGroup
-from project import app, db
+from project import create_app, db
 
-cli = FlaskGroup(app)
+app = create_app()
+cli = FlaskGroup(create_app=create_app)
 
 
-@cli.command()
+@cli.command("recreate_db")
 def recreate_db():
     db.drop_all()
     db.create_all()
-    db.session.com
+    db.session.commit()
 
 
-@cli.command()
+@cli.command("test")
 def test():
     """Runs the tests without code coverage"""
     tests = unittest.TestLoader().discover("project/tests", pattern="test*.py")

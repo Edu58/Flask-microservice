@@ -1,13 +1,9 @@
-import os
-from flask import Flask, jsonify, Blueprint
+import os, unittest
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
 
-app_settings = os.getenv("APP_SETTINGS")
-app.config.from_object("project.config.DevelopmentConfig")
-
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 
 # Application factory
@@ -16,7 +12,7 @@ def create_app(script_info=None):
     app = Flask(__name__)
 
     # set config
-    app.settings = os.getenv("APP_SETTINGS")
+    app_settings = os.getenv("APP_SETTINGS")
     app.config.from_object(app_settings)
 
     # set up extensions
@@ -29,10 +25,5 @@ def create_app(script_info=None):
 
     # shell context from flask cli
     app.shell_context_processor({"app": app, "db": db})
-    
+
     return app
-
-
-@app.route("/", methods=["GET"])
-def index():
-    return jsonify({"1": "hallooo", "2": "yessss"})
