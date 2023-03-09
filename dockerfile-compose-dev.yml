@@ -1,11 +1,12 @@
-version: '3.8'
+version: '3.4'
 services:
   users:
     container_name: users
     build:
       context: ./services/users
       dockerfile: Dockerfile-dev
-    
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     ports:
       - 5001:5000
     environment:
@@ -22,6 +23,7 @@ services:
 
   users-db:
     container_name: users-db
+    restart: always
     build: 
       context: ./services/users/project/db
       dockerfile: Dockerfile
@@ -31,3 +33,5 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
+volumes:
+  pgdata:
