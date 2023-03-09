@@ -151,6 +151,20 @@ class TestUserService(BaseTestCase):
             self.assertIn("testuser2@gmail.com", data["data"]["users"][1]["email"])
             self.assertIn("success", data["status"])
 
+        def test_main_with_users(self):
+            """
+            Ensure the main route behaves correctly when users have been
+            added to the database."""
+            add_user('michael', 'michael@mherman.org')
+            add_user('fletcher', 'fletcher@notreal.com')
+            with self.client:
+                response = self.client.get('/')
+                self.assertEqual(response.status_code, 200)
+                self.assertIn(b'<h1>All Users</h1>', response.data)
+                self.assertNotIn(b'<p>No users!</p>', response.data)
+                self.assertIn(b'testuser', response.data)
+                self.assertIn(b'testuser2', response.data)
+
 
 if __name__ == "__main__":
     unittest.main()
