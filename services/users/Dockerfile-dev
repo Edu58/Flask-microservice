@@ -1,7 +1,6 @@
 FROM python:3.8
 
 # install environment dependencies
-ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -yqq \
     && apt-get install -yqq --no-install-recommends \
         netcat \
