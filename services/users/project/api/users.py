@@ -1,4 +1,3 @@
-import json
 from flask import Blueprint, jsonify, render_template, request
 from sqlalchemy import exc
 from .models import User
@@ -44,13 +43,14 @@ def add_user():
             db.session.add(User(username=username, email=email))
             db.session.commit()
 
-            response_obj = {"status": "success", "message": f"{email} was added"}
+            response_obj = {"status": "success",
+                            "message": f"{email} was added"}
 
             return jsonify(response_obj), 201
         else:
             error_response_obj["message"] = "Email already in use"
             return jsonify(error_response_obj), 400
-    except exc.IntegrityError as e:
+    except exc.IntegrityError:
         db.session.rollback()
         return jsonify(error_response_obj), 400
 
@@ -81,7 +81,7 @@ def get_single_user(user_id):
 
         return jsonify(response_object), 200
 
-    except ValueError as e:
+    except ValueError:
         return jsonify(response_object), 400
 
 

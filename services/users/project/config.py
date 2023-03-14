@@ -4,7 +4,7 @@ import os
 class BaseConfig:
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY="very nice"
+    SECRET_KEY = "very nice"
 
 
 class DevelopmentConfig(BaseConfig):

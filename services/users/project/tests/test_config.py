@@ -16,7 +16,8 @@ class TestDevelopmentConfig(TestCase):
         self.assertTrue(app.config["SECRET_KEY"] == "very nice")
         self.assertFalse(current_app is None)
         self.assertTrue(
-            app.config["SQLALCHEMY_DATABASE_URI"] == os.environ.get("DATABASE_URL")
+            app.config["SQLALCHEMY_DATABASE_URI"] == os.environ.get(
+                "DATABASE_URL")
         )
 
 
@@ -29,7 +30,8 @@ class TestTestingConfig(TestCase):
         self.assertTrue(app.config["SECRET_KEY"] == "very nice")
         self.assertTrue(app.config["TESTING"])
         self.assertTrue(
-            app.config["SQLALCHEMY_DATABASE_URI"] == os.environ.get("DATABASE_TEST_URL")
+            app.config["SQLALCHEMY_DATABASE_URI"] == os.environ.get(
+                "DATABASE_TEST_URL")
         )
 
 
