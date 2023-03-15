@@ -2,10 +2,12 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_migrate import Migrate
 
 
 db = SQLAlchemy()
 toolbar = DebugToolbarExtension()
+migrate = Migrate()
 
 
 # Application factory
@@ -22,6 +24,9 @@ def create_app(script_info=None):
 
     # start toolbar
     toolbar.init_app(app)
+
+    # setup migrations
+    migrate.init_app(app, db)
 
     # register blueprints
     from project.api.users import users_blueprint
